@@ -10,6 +10,8 @@ class category extends Model
 {
     use SoftDeletes;
 
+    private $name;
+
     /**
      * The table associated with the model.
      *
@@ -31,4 +33,25 @@ class category extends Model
     {
         return $this->belongsTo('App\Post');
     }
+
+    //Getters and Setters
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->attributes['name'] = $name;
+        //$this->name = $name;
+    }
+
+
 }

@@ -59,4 +59,6 @@ Add the route to routes/api.php
 
 ```Route::resource('comments', 'CommentController',['except' => ['index']]);```
 
+###List Routes
 
+```php artisan route:list```

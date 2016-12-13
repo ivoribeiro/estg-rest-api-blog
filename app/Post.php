@@ -22,7 +22,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','body','author'];
+    protected $fillable = ['title','body','author','category'];
 
     /**
      * The attributes that should be mutated to dates.

@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Comment;
+use App\Post;
 
 use Illuminate\Support\Facades\Validator;
 
-
-class CommentController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +17,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return response()->json(["error" => null, "code" => 200, "data" => $posts]);
     }
 
     /**
@@ -39,11 +39,12 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = array(
-            'post' => 'required|numeric',
+            'title' => 'required|unique:posts|max:255',
             'body' => 'required',
-            'author' => 'required|numeric'
+            'author' => 'required|numeric',
+            'category' => 'required|numeric'
+
         );
         $validator = Validator::make($request->all(), $rules);
 
@@ -51,11 +52,10 @@ class CommentController extends Controller
             return response()->json(["error" => $validator->messages()]);
         } else {
             // store
-            $comment = new Comment($request->all());
-            $comment->save();
-            return response()->json([$comment]);
+            $post = new Post($request->all());
+            $post->save();
+            return response()->json([$post]);
         }
-
     }
 
     /**
@@ -66,8 +66,8 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-
-
+        $post = Post::findOrFail($id);
+        return response()->json([$post]);
     }
 
     /**
@@ -90,7 +90,21 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $rules = array(
+            'body' => 'required',
+            'title' => 'required',
+            'category' => 'required'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(["error" => $validator->messages()]);
+        } else {
+
+            $input = $request->except("author");
+            $post->fill($input)->save();
+            return response()->json(["data" => array($post)]);
+        }
     }
 
     /**
@@ -101,8 +115,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $comment = Comment::findOrFail($id);
-        $comment->delete();
-
+        $post = Post::findOrFail($id);
+        $post->delete();
     }
 }

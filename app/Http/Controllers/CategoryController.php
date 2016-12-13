@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Comment;
+use App\Category;
 
 use Illuminate\Support\Facades\Validator;
 
-
-class CommentController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +17,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return response()->json(["error"=>null,"code"=>200,"data"=>$categories]);
     }
 
     /**
@@ -39,21 +39,19 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = array(
-            'post' => 'required|numeric',
-            'body' => 'required',
-            'author' => 'required|numeric'
+            'name' => 'required'
         );
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return response()->json(["error" => $validator->messages()]);
+            return response(500)->json(["error" => $validator->messages()]);
         } else {
             // store
-            $comment = new Comment($request->all());
-            $comment->save();
-            return response()->json([$comment]);
+            $category = new Category($request->all());
+            //$category->setName($request->get("name"));
+            $category->save();
+            return response()->json([$category]);
         }
 
     }
@@ -66,8 +64,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-
-
+        //
     }
 
     /**
@@ -101,8 +98,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        $comment = Comment::findOrFail($id);
-        $comment->delete();
-
+        //
     }
 }
