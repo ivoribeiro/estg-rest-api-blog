@@ -38,4 +38,12 @@ class Post extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    /**
+     * Get the category that owns the post.
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Category','category');
+    }
 }

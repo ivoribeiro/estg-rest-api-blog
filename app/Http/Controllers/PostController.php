@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('category')->get();
         return response()->json(["error" => null, "code" => 200, "data" => $posts]);
     }
 
@@ -40,7 +40,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'title' => 'required|unique:posts|max:255',
+            'title' => 'required|unique:post|max:255',
             'body' => 'required',
             'author' => 'required|numeric',
             'category' => 'required|numeric'
@@ -117,5 +117,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
+        return response()->json(["data" => array($post)]);
     }
 }
