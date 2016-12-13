@@ -19,4 +19,6 @@ Route::get('/user', function (Request $request) {
 
 Route::resource('comments', 'CommentController',['only' => ['store','destroy']]);
 Route::resource('posts', 'PostController',['only' => ['store','index','show','update','destroy']]);
+//Route to a post comments
+Route::get('/posts/{id}/comments','PostController@showComments');
 Route::resource('categories', 'CategoryController',['only' => ['store','index']]);

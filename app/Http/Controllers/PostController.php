@@ -119,4 +119,8 @@ class PostController extends Controller
         $post->delete();
         return response()->json(["data" => array($post)]);
     }
+
+    public function showComments($id){
+        return response()->json(["data" => array(Post::find($id)->comments()->get())]);
+    }
 }

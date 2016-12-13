@@ -31,7 +31,7 @@ class category extends Model
      */
     public function post()
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Post','category');
     }
 
     //Getters and Setters
