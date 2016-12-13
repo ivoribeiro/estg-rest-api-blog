@@ -27,6 +27,13 @@ class category extends Model
     protected $fillable = ['name'];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
      * Get the post that owns the comment.
      */
     public function post()
