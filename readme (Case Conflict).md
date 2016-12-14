@@ -1,3 +1,5 @@
+#Virtual Environments
+https://www.gitbook.com/book/ivoribeiro/vagrantvirtualdevelopmentenviormentsprovider/details
 
 #Run
 
@@ -13,7 +15,7 @@
 
 ###Rollback migrations
 
-``` php artisan migrate:rollback ```
+``` php artisan migrate:reset ```
 
 
 
