@@ -32,6 +32,13 @@ class Post extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['is_cool'];
+
+    /**
      * Get the comments for the blog post.
      */
     public function comments()
@@ -45,5 +52,17 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo('App\Category','category');
+    }
+
+    /**
+     * [ACCESSOR]
+     * Get the cool flag for the post.
+     *
+     * @return bool
+     */
+    public function getIsCoolAttribute()
+    {
+        //is cool if the author of the post is me
+        return $this->attributes['author'] == 1;
     }
 }
